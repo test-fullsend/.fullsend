@@ -42,7 +42,6 @@ jobs:
 
       - name: Run hello-world agent
         env:
-          REPO_NAME: ${{ inputs.target-repo }}
           ANTHROPIC_VERTEX_PROJECT_ID: ${{ secrets.GCP_PROJECT }}
           CLOUD_ML_REGION: ${{ secrets.GCP_REGION }}
         run: |
