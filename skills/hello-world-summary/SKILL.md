@@ -12,4 +12,4 @@ The summary should include:
 - The main languages and frameworks used
 - A list of the top-level directories and their purpose
 
-Write the summary to `output/summary.md`.
+Write the summary to `$FULLSEND_OUTPUT_DIR/summary.md` (the `FULLSEND_OUTPUT_DIR` environment variable points to the output directory).

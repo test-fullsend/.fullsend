@@ -1,5 +1,6 @@
 # harness/hello-world.yaml
 agent: agents/hello-world.md
+model: sonnet
 image: quay.io/manonru/fullsend-exp:latest
 policy: policies/hello-world.yaml
 

@@ -15,14 +15,15 @@ jobs:
       contents: read
 
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5 # v4
 
       - name: Checkout target repo
-        uses: actions/checkout@v4
+        uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5 # v4
         with:
           repository: ${{ inputs.target-repo }}
           path: target-repo
 
+      # fullsend binary from personal fork — intentional for dev experiment.
       - name: Install fullsend
         run: |
           curl -LsSf https://github.com/maruiz93/fullsend/releases/download/runner-hello-world-dev/fullsend_dev_linux_amd64.tar.gz -o /tmp/fullsend.tar.gz
@@ -31,26 +32,25 @@ jobs:
 
       - name: Install OpenShell
         run: |
-          curl -LsSf https://raw.githubusercontent.com/NVIDIA/OpenShell/main/install.sh | sh
+          curl -LsSf https://raw.githubusercontent.com/NVIDIA/OpenShell/v0.0.30/install.sh | sh
           openshell --version
 
       - name: Authenticate to Google Cloud
-        uses: google-github-actions/auth@v2
+        uses: google-github-actions/auth@c200f3691d83b41bf9bbd8638997a462592937ed # v2
         with:
           credentials_json: ${{ secrets.GCP_SA_KEY }}
 
       - name: Run hello-world agent
         env:
           REPO_NAME: ${{ inputs.target-repo }}
-          TARGET_REPO_DIR: target-repo
           ANTHROPIC_VERTEX_PROJECT_ID: ${{ secrets.GCP_PROJECT }}
           CLOUD_ML_REGION: ${{ secrets.GCP_REGION }}
         run: |
-          fullsend run hello-world --harness-dir .
+          fullsend run hello-world --harness-dir . --target-repo target-repo --output /tmp/fullsend-output
 
       - name: Upload artifacts
         if: always()
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
         with:
           name: hello-world-output
-          path: /tmp/fullsend/agent-hello-world-*/
+          path: /tmp/fullsend-output/

@@ -6,8 +6,9 @@ SUMMARY_FILE="output/summary.md"
 
 # Counter-based failure for testing retry logic.
 # VALIDATION_EXPECTED_FAILURES controls how many times to fail before passing.
+# Counter file lives in FULLSEND_RUN_DIR so it persists across iterations.
 EXPECTED_FAILURES="${VALIDATION_EXPECTED_FAILURES:-0}"
-COUNTER_FILE=".validation-counter"
+COUNTER_FILE="${FULLSEND_RUN_DIR:-.}/.validation-counter"
 
 if [ "$EXPECTED_FAILURES" -gt 0 ]; then
   COUNT=0
@@ -23,7 +24,7 @@ if [ "$EXPECTED_FAILURES" -gt 0 ]; then
   fi
 fi
 
-# Validate hello-world.txt exists and contains expected output.
+# Validate hello-world.md exists and contains expected output.
 if [ ! -f "$HELLO_FILE" ]; then
   echo "FAIL: $HELLO_FILE not found"
   exit 1
