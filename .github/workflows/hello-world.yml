@@ -30,10 +30,6 @@ jobs:
           sudo tar xzf /tmp/fullsend.tar.gz -C /usr/local/bin/
           fullsend --version
 
-      - name: Install OpenShell
-        run: |
-          curl -LsSf https://raw.githubusercontent.com/NVIDIA/OpenShell/v0.0.30/install.sh | sh
-          openshell --version
 
       - name: Authenticate to Google Cloud
         uses: google-github-actions/auth@c200f3691d83b41bf9bbd8638997a462592937ed # v2
@@ -45,7 +41,7 @@ jobs:
           ANTHROPIC_VERTEX_PROJECT_ID: ${{ secrets.GCP_PROJECT }}
           CLOUD_ML_REGION: ${{ secrets.GCP_REGION }}
         run: |
-          fullsend run hello-world --harness-dir . --target-repo target-repo --output /tmp/fullsend-output
+          fullsend run hello-world --fullsend-dir . --target-repo target-repo --output-dir /tmp/fullsend-output
 
       - name: Upload artifacts
         if: always()
